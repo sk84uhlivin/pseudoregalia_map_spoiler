@@ -13,7 +13,7 @@ def resource_path(relative_path):
     try:
         # PyInstaller creates a temp folder and stores path in _MEIPASS
         base_path = sys._MEIPASS
-    except Exception:
+    except AttributeError:
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
@@ -24,35 +24,41 @@ words = []
 locations = []
 coordinates = map_coordinates.locations
 
-# Open an Image
+# Open the map
 img = Image.open(resource_path('map.png'))
 
-print("Generating text from spoiler_log.txt...")
 # Open the text document for reading
-with open('spoiler_log.txt', 'r') as file:
-    # Iterate through each line in the document
-    for line in file:
-        # Split the line at the colon
-        parts = line.strip().split(':')
-        if len(parts) == 2:
-            word, location = parts
-            # Add the word and location to their respective lists
-            words.append(word.strip())
-            locations.append(location.strip())
+try:
+    with open('spoiler_log.txt', 'r') as file:
+        print("Generating text from spoiler_log.txt...")
+        # Iterate through each line in the document
+        for line in file:
+            # Split the line at the colon
+            parts = line.strip().split(':')
+            if len(parts) == 2:
+                word, location = parts
+                # Add the word and location to their respective lists
+                words.append(word.strip())
+                locations.append(location.strip())
+except FileNotFoundError:
+    print("spoiler_log.txt not found. This program needs to be in the same directory as the spoiler log from the "
+          "randomizer.")
+    input("Press any key to exit...")
+    exit()
 
 for w, l in zip(words, locations):
-    # Check if the key exists in the dictionary and retrieve its value
+    # Look up the location in the dictionary and retrieve its value
     if l in coordinates:
         value = coordinates[l]
 
         # Call draw Method to add 2D graphics in an image
-        I1 = ImageDraw.Draw(img)
+        draw = ImageDraw.Draw(img)
 
         # Custom font style and font size
-        myFont = ImageFont.truetype(resource_path('alittlepot.ttf'), 85)
+        myFont = ImageFont.truetype(font=resource_path('alittlepot.ttf'), size=85)
 
         # Add Text to an image
-        I1.text(xy=value, text=w, font=myFont, fill=(255, 0, 0), anchor="mm")
+        draw.text(xy=value, text=w, font=myFont, fill=(255, 0, 0), anchor="mm")
 
     else:
         print(f"'{w}' was not found in the dictionary.")
