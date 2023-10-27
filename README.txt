@@ -4,4 +4,5 @@ Simply download the latest release, and put the .exe in the same directory as th
 Credits:
 rittz - Creator of Pseudoregalia.
 spuds - Creator of the standalone randomizer.
+AndresofAstora - Pseudoregalia Map.
 Just_Matt - Made the icon for the .exe.
