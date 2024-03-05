@@ -29,7 +29,7 @@ img = Image.open(resource_path('map.png'))
 
 # Open the text document for reading
 try:
-    with open('spoiler_log.txt', 'r') as file:
+    with open('spoiler.log', 'r') as file:
         print("Generating text from spoiler_log.txt...")
         # Iterate through each line in the document
         for line in file:
