@@ -46,7 +46,9 @@ except FileNotFoundError:
     input("Press any key to exit...")
     exit()
 
+line_number = 0
 for w, l in zip(words, locations):
+    line_number += 1
     # Look up the location in the dictionary and retrieve its value
     if l in coordinates:
         value = coordinates[l]
@@ -61,7 +63,7 @@ for w, l in zip(words, locations):
         draw.text(xy=value, text=w, font=myFont, fill=(255, 0, 0), anchor="mm")
 
     else:
-        print(f"'{w}' was not found in the dictionary.")
+        print(f"({line_number}) '{w}' was not found in the dictionary.")
 print("Saving map...")
 # Save the edited image
 img.save("spoiler_map.png")
