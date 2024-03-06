@@ -1,5 +1,6 @@
 # Dictionary with manually assigned coordinates
 locations = {
+    "where dream breaker normally is in Dilapidated Dungeon": (467, 2032),
     "where the first health piece is in Dilapidated Dungeon": (1220, 2186),
     "where slide normally is in Dilapidated Dungeon": (1457, 1969),
     "black hole parkour off the beaten path in Dilapidated Dungeon": (408, 2524),
@@ -13,7 +14,7 @@ locations = {
     "under the cheese bell in Empty Bailey": (3863, 2263),
     "where indignation normally is in Castle Sansa": (2517, 1898),
     "chillin' on a ledge by the window in Castle Sansa": (2648, 2005),
-    "where the professional normally is in Castle Sansa": (2422, 1755),
+    # where the professional normally is in Castle Sansa": (2422, 1755),
     "tucked deep in a corner in the bouncer room in Castle Sansa": (2795, 1818),
     "the extremely slappable wheel guy room in Castle Sansa": (1926, 1589),
     "the old softlock room in Castle Sansa": (1897, 2663),
@@ -31,7 +32,10 @@ locations = {
     "black hole parkour behind strikebreak wall in Underbelly": (1609, 4160),
     "behind the locked door in Underbelly": (1110, 4352),
     "on top of the big building in Underbelly": (2814, 3294),
+    # Listing both spellings until bug is fixed in randomizer.
+    "where sun greaves normally is in Listless Library": (1920, 689),
     "where sun greaves normally are in Listless Library": (1920, 689),
+    # ------------------------------------------------------------ #
     "in the buttress room in Listless Library": (2677, 306),
     "in the hay behind the locked door in Listless Library": (3082, 943),
     "tucked deep behind the locked door in Listless Library": (2817, 745),
@@ -49,4 +53,8 @@ locations = {
     "in the room with a lever on each side in Sansa Keep": (1255, 700),
     "tucked near the theatre entrance in Sansa Keep": (1389, 1609),
     "at the end of the parkour in Sansa Keep": (551, 1300)
+}
+tri_coordinates = {
+    "splitgreaves": [(1920, 689), (1920, 585), (1920, 793)],
+    "splitcling": [(4101, 1269), (3927, 1165), (4277, 1165)]
 }
