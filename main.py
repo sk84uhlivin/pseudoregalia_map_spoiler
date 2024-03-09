@@ -19,10 +19,25 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 
+def draw_item(coordinate, item, color_rgb):
+    # Call draw Method to add 2D graphics in an image
+    draw = ImageDraw.Draw(img)
+
+    # Custom font style and font size
+    myFont = ImageFont.truetype(font=resource_path('alittlepot.ttf'), size=45)
+
+    # Add Text to an image
+    draw.text(xy=coordinate, text=item, font=myFont, fill=color_rgb, anchor="mm")
+
+
 # Initialize two empty lists to store words and locations
 words = []
 locations = []
 coordinates = map_coordinates.locations
+big_twilight_locs = ["20", "safe", "show"]
+red = (255, 0, 0)
+teal = (137, 207, 240)
+green = (77, 204, 32)
 
 # Open the map
 img = Image.open(resource_path('map.png'))
@@ -35,6 +50,7 @@ isSplitCling = False
 splitCoords = map_coordinates.tri_coordinates
 SplitGreavesCoords = splitCoords["splitgreaves"]
 SplitClingCoords = splitCoords["splitcling"]
+TwilightGoatlingsCoords = splitCoords["twilightgoatlings"]
 
 # Open the text document for reading
 try:
@@ -66,8 +82,16 @@ print(f"Split Cling: {isSplitCling}")
 
 for w, l in zip(words, locations):
     line_number += 1
+    color = red
     # Look up the location in the dictionary and retrieve its value
-    if l in coordinates:
+    if "Twilight" in l and any(item in l for item in big_twilight_locs):
+        color = teal
+        value = TwilightGoatlingsCoords[0]
+        del TwilightGoatlingsCoords[0]
+
+        draw_item(value, w, color)
+
+    elif l in coordinates:
         value = coordinates[l]
 
         if isSplitGreaves and l == "where sun greaves normally is in Listless Library":
@@ -78,17 +102,17 @@ for w, l in zip(words, locations):
             value = SplitClingCoords[0]
             del SplitClingCoords[0]
 
-        # Call draw Method to add 2D graphics in an image
-        draw = ImageDraw.Draw(img)
+        if "goatling" in l:
+            color = teal
 
-        # Custom font style and font size
-        myFont = ImageFont.truetype(font=resource_path('alittlepot.ttf'), size=85)
+        if "note" in l:
+            color = green
 
-        # Add Text to an image
-        draw.text(xy=value, text=w, font=myFont, fill=(255, 0, 0), anchor="mm")
+        draw_item(value, w, color)
 
     else:
         print(f"({line_number}) '{w}' was not found in the dictionary.")
+
 print("Saving map...")
 # Save the edited image
 img.save("spoiler_map.png")
