@@ -38,6 +38,7 @@ big_twilight_locs = ["20", "safe", "show"]
 red = (255, 0, 0)
 teal = (137, 207, 240)
 green = (77, 204, 32)
+yellow = (255, 255, 102)
 
 # Open the map
 img = Image.open(resource_path('map.png'))
@@ -45,12 +46,17 @@ img = Image.open(resource_path('map.png'))
 # Set variables for split settings
 isSplitGreaves = False
 isSplitCling = False
+isNotes = False
+isGoatlings = False
+isChairs = False
 
 # Store list of split coordinates to memory
 splitCoords = map_coordinates.tri_coordinates
 SplitGreavesCoords = splitCoords["splitgreaves"]
 SplitClingCoords = splitCoords["splitcling"]
 TwilightGoatlingsCoords = splitCoords["twilightgoatlings"]
+LickCoords = splitCoords["licklocations"]
+TwilightTableCoords = splitCoords["twilighttable"]
 
 # Open the text document for reading
 try:
@@ -71,7 +77,6 @@ except FileNotFoundError:
     input("Press any key to exit...")
     exit()
 
-line_number = 0
 
 if "SunGreaves" not in words:
     isSplitGreaves = True
@@ -79,7 +84,17 @@ print(f"Split Greaves: {isSplitGreaves}")
 if "ClingGem(2)" in words:
     isSplitCling = True
 print(f"Split Cling: {isSplitCling}")
+if "Note" in words:
+    isNotes = True
+print(f"Notes: {isNotes}")
+if "Goatling" in words:
+    isGoatlings = True
+print(f"Goatlings: {isGoatlings}")
+if "Chair" in words:
+    isChairs = True
+print(f"Chairs: {isChairs}")
 
+line_number = 0
 for w, l in zip(words, locations):
     line_number += 1
     color = red
@@ -90,6 +105,26 @@ for w, l in zip(words, locations):
         del TwilightGoatlingsCoords[0]
 
         draw_item(value, w, color)
+
+    elif "lick" in l:
+        value = LickCoords[0]
+        del LickCoords[0]
+
+        if "goatling" in l:
+            color = teal
+
+        if "chair" in l:
+            color = yellow
+
+        draw_item(value, w, color)
+
+    elif "around the table" in l:
+        color = yellow
+        value = TwilightTableCoords[0]
+        del TwilightTableCoords[0]
+
+        draw_item(value, w, color)
+
 
     elif l in coordinates:
         value = coordinates[l]
@@ -108,10 +143,21 @@ for w, l in zip(words, locations):
         if "note" in l:
             color = green
 
+        if "chair" in l:
+            color = yellow
+
         draw_item(value, w, color)
 
     else:
         print(f"({line_number}) '{w}' was not found in the dictionary.")
+
+if isGoatlings or isChairs:
+    draw = ImageDraw.Draw(img)
+    draw.line(xy=((2479, 2095), (2554, 2170)), fill=(255, 255, 255, 50), width=2)
+
+if isGoatlings:
+    draw = ImageDraw.Draw(img)
+    draw.line(xy=((3586, 2264), (3686, 2364)), fill=(255, 255, 255, 50), width=2)
 
 print("Saving map...")
 # Save the edited image
