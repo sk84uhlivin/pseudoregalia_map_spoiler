@@ -19,18 +19,12 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 
-red = (255, 0, 0)
-teal = (137, 207, 240)
-green = (77, 204, 32)
-yellow = (255, 255, 102)
-
-
-def color_determiner(text):
-    if "goatling" in text:
-        out_color = teal
-
-    elif "chair" in text:
+def decide_color(text):
+    if "chair" in text:
         out_color = yellow
+
+    elif "goatling" in text:
+        out_color = teal
 
     elif "note" in text:
         out_color = green
@@ -46,10 +40,33 @@ def draw_item(coordinate, item, color_rgb):
     draw = ImageDraw.Draw(img)
 
     # Custom font style and font size
-    myFont = ImageFont.truetype(font=resource_path('alittlepot.ttf'), size=45)
+    myFont = ImageFont.truetype(font=resource_path('KGPrimaryPenmanship2.ttf'), size=55)
 
     # Add Text to an image
     draw.text(xy=coordinate, text=item, font=myFont, fill=color_rgb, anchor="mm")
+
+
+def draw_legend():
+    # Make legend.
+    draw = ImageDraw.Draw(img)
+
+    draw.rectangle((243, 3522, 267, 3546), fill=red)
+    draw.rectangle((243, 3629, 267, 3653), fill=teal)
+    draw.rectangle((243, 3736, 267, 3760), fill=yellow)
+    draw.rectangle((243, 3843, 267, 3867), fill=green)
+
+    # Custom font style and font size
+    myFont = ImageFont.truetype(font=resource_path('KGPrimaryPenmanship2.ttf'), size=65)
+
+    # Add text to map.
+    draw.text(xy=(350, 3515), text="Items", font=myFont, fill=red, anchor="lt", stroke_width=1,
+              stroke_fill=(0, 0, 0))
+    draw.text(xy=(350, 3622), text="Goatlings", font=myFont, fill=teal, anchor="lt", stroke_width=1,
+              stroke_fill=(0, 0, 0))
+    draw.text(xy=(350, 3729), text="Chairs", font=myFont, fill=yellow, anchor="lt", stroke_width=1,
+              stroke_fill=(0, 0, 0))
+    draw.text(xy=(350, 3836), text="Notes", font=myFont, fill=green, anchor="lt", stroke_width=1,
+              stroke_fill=(0, 0, 0))
 
 
 # Initialize two empty lists to store words and locations
@@ -57,6 +74,10 @@ words = []
 locations = []
 coordinates = map_coordinates.locations
 big_twilight_locs = ["20", "safe", "show"]
+red = (204, 102, 119)
+teal = (136, 204, 238)
+green = (68, 170, 153)
+yellow = (221, 204, 119)
 
 # Open the map
 img = Image.open(resource_path('map.png'))
@@ -76,7 +97,7 @@ TwilightGoatlingsCoords = splitCoords["twilightgoatlings"]
 LickCoords = splitCoords["licklocations"]
 TwilightTableCoords = splitCoords["twilighttable"]
 
-# Open the text document for reading
+# Open the spoiler log for reading.
 try:
     with open('spoiler.log', 'r') as file:
         print("Parsing text from spoiler.log...")
@@ -112,6 +133,15 @@ if "Chair" in words:
     isChairs = True
 print(f"Chairs: {isChairs}")
 
+# Draw lines depending on what settings are on.
+if isGoatlings or isChairs:
+    draw = ImageDraw.Draw(img)
+    draw.line(xy=((2479, 2095), (2554, 2170)), fill=(255, 255, 255, 50), width=2)
+
+if isGoatlings:
+    draw = ImageDraw.Draw(img)
+    draw.line(xy=((3586, 2264), (3686, 2364)), fill=(255, 255, 255, 50), width=2)
+
 # Match the location to the coordinate.
 line_number = 0
 for w, l in zip(words, locations):
@@ -122,7 +152,7 @@ for w, l in zip(words, locations):
         value = TwilightGoatlingsCoords[0]
         del TwilightGoatlingsCoords[0]
 
-        color = teal
+        color = decide_color(l)
 
         draw_item(value, w, color)
 
@@ -130,7 +160,7 @@ for w, l in zip(words, locations):
         value = LickCoords[0]
         del LickCoords[0]
 
-        color = color_determiner(l)
+        color = decide_color(l)
 
         draw_item(value, w, color)
 
@@ -138,10 +168,9 @@ for w, l in zip(words, locations):
         value = TwilightTableCoords[0]
         del TwilightTableCoords[0]
 
-        color = yellow
+        color = decide_color(l)
 
         draw_item(value, w, color)
-
 
     elif l in coordinates:
         value = coordinates[l]
@@ -154,24 +183,16 @@ for w, l in zip(words, locations):
             value = SplitClingCoords[0]
             del SplitClingCoords[0]
 
-        color = color_determiner(l)
+        color = decide_color(l)
 
         draw_item(value, w, color)
 
     else:
         print(f"({line_number}) '{w}' was not found in the dictionary.")
 
+draw_legend()
 
-# Draw lines depending on what settings are on.
-if isGoatlings or isChairs:
-    draw = ImageDraw.Draw(img)
-    draw.line(xy=((2479, 2095), (2554, 2170)), fill=(255, 255, 255, 50), width=2)
-
-if isGoatlings:
-    draw = ImageDraw.Draw(img)
-    draw.line(xy=((3586, 2264), (3686, 2364)), fill=(255, 255, 255, 50), width=2)
-
-# Save the edited image
+# Save the edited image.
 print("Saving map...")
 img.save("spoiler_map.png")
 print("Map saved, program will exit in 3 seconds.")
