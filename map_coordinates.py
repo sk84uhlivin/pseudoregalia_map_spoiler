@@ -1,8 +1,8 @@
 # Dictionary with manually assigned coordinates
 locations = {
-    "where dream breaker normally is in Dilapidated Dungeon": (467, 1998),
+    "where dream breaker normally is in Dilapidated Dungeon": (1458, 1934),
     "where the first health piece is in Dilapidated Dungeon": (1220, 2157),
-    "where slide normally is in Dilapidated Dungeon": (1458, 1934),
+    "where slide normally is in Dilapidated Dungeon": (467, 1998),
     "black hole parkour off the beaten path in Dilapidated Dungeon": (408, 2490),
     "up in the rafters in Dilapidated Dungeon": (916, 2129),
     "missable high walled room in Dilapidated Dungeon": (962, 1819),
