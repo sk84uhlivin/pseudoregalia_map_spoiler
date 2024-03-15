@@ -18,7 +18,7 @@ locations = {
     # where the professional normally is in Castle Sansa": (2422, 1755),
     "tucked deep in a corner in the bouncer room in Castle Sansa": (2788, 1849),
     "the extremely slappable wheel guy room in Castle Sansa": (1926, 1560),
-    "the old softlock room in Castle Sansa": (1897, 2663),
+    "the old softlock room in Castle Sansa": (1897, 2692),
     "the goatling about to jump into the haze in Castle Sansa": (2177, 2644),
     "cool moon room in Castle Sansa": (2438, 2684),
     "through the wallkick tunnel in Castle Sansa": (2194, 1373),
@@ -79,5 +79,5 @@ tri_coordinates = {
     "splitcling": [(4101, 1068), (4101, 1124), (4101, 1180)],
     "twilightgoatlings": [(3532, 3323), (3532, 3380), (3532, 3438), (3532, 3495)],
     "twilighttable": [(3623, 4321), (3623, 4377), (3623, 4433)],
-    "licklocations": [(2620, 2170), (2620, 2226), (2620, 2282), (2620, 2338)]
+    "licklocations": [(2620, 2228), (2620, 2286), (2620, 2340), (2620, 2398)]
 }

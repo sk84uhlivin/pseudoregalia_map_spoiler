@@ -136,7 +136,7 @@ print(f"Chairs: {isChairs}")
 # Draw lines depending on what settings are on.
 if isGoatlings or isChairs:
     draw = ImageDraw.Draw(img)
-    draw.line(xy=((2479, 2095), (2554, 2170)), fill=(255, 255, 255, 50), width=2)
+    draw.line(xy=((2479, 2085), (2620, 2226)), fill=(255, 255, 255, 50), width=2)
 
 if isGoatlings:
     draw = ImageDraw.Draw(img)
