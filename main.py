@@ -119,19 +119,14 @@ except FileNotFoundError:
 # Check what settings are enabled.
 if "SunGreaves" not in words:
     isSplitGreaves = True
-print(f"Split Greaves: {isSplitGreaves}")
 if "ClingGem(2)" in words:
     isSplitCling = True
-print(f"Split Cling: {isSplitCling}")
 if "Note" in words:
     isNotes = True
-print(f"Notes: {isNotes}")
 if "Goatling" in words:
     isGoatlings = True
-print(f"Goatlings: {isGoatlings}")
 if "Chair" in words:
     isChairs = True
-print(f"Chairs: {isChairs}")
 
 # Draw lines depending on what settings are on.
 if isGoatlings or isChairs:
